@@ -7,4 +7,9 @@
 export type User = {
   id: number
   name: string
+  Amigo?: amigo
+}
+export type amigo = {
+  nomeAmigo: string
+  id: number
 }

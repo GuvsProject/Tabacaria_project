@@ -1,0 +1,26 @@
+.divInputs {
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.DivPrincipalInput {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.FormPrincipalInput {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem
+}
+
+.MuiAlert-outlinedSuccess {
+    color:black
+}
