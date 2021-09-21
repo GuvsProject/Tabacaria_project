@@ -55,31 +55,31 @@ const Cadastro_de_Produtos = () => {
         <h1>Cadastro de Produtos</h1>
         <form className={styles.FormPrincipalInput}>
           <div className={styles.divInputs}>
-            <TextInput
+            <TextInput required
               placeholder="Produto"
               value={value}
               onChange={event => setValue(event.target.value)}
             />
 
-            <TextInput
+            <TextInput required
               placeholder="Descrição"
               value={descricao}
               onChange={event => setDescricao(event.target.value)}
             />
 
-            <TextInput
+            <TextInput required
               placeholder="Quantidade"
               value={Quantidade}
               onChange={event => setQuantidade(event.target.value)}
             />
 
-            <TextInput
+            <TextInput required
               placeholder="Preco"
               value={Preco}
               onChange={event => setPreco(event.target.value)}
             />
 
-            <FileInput
+            <FileInput 
               name="FileImage"
               onChange={event => {
                 const fileList = event.target.files;
@@ -90,7 +90,7 @@ const Cadastro_de_Produtos = () => {
 
 
           </div>{/* Div dos botoes, */}
-          <Button primary label="Confirmar" onClick={() =>  handleSubmit() } />
+          <Button type='submit' primary label="Confirmar" onClick={() =>  handleSubmit() } />
 
           <Link href="/">
             <a>Voltar à Pagina Inicial</a>
