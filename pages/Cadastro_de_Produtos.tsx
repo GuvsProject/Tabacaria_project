@@ -7,25 +7,45 @@ import { TextInput } from 'grommet'
 import Alert from '@material-ui/lab/Alert';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
-
+import axios from 'axios'
 
 import styles from '../styles/Cadastro_de_Produtos.module.css'
 
 const Cadastro_de_Produtos = () => {
 
   //Inputs dos campos
-  const [value, setValue] = useState('');
-  const [descricao, setDescricao] = useState('');
-  const [Quantidade, setQuantidade] = useState('');
-  const [Preco, setPreco] = useState('');
+  const [ProductName, setProductName] = useState('');
+  // const [Description, setDescription] = useState('');
+  const [Quantity, setQuantity] = useState('');
+  const [Price, setPrice] = useState('');
 
   //Toast
   const [visible, setVisible] = useState(false);
 
-  function handleSubmit() {
+  async function handleSubmit(event) {
+    console.log("xeske ")
+    event.preventDefault()
+    
+    try{
+      console.log(ProductName, Quantity, Price)
+      const response = await axios.post('http://localhost:3333/products',{
+        name: ProductName,
+        quantity: Quantity,
+        price: Price
+      })
+      console.log(response.data)
+      setVisible(true)
+      setTimeout(() => {setVisible(false)}, 5000);
+      setProductName('')
+      setQuantity('')
+      setPrice('')
+    }catch(err){
+      console.log(err)
 
-    setVisible(true)
-    // setTimeout(() => {setVisible(false)}, 500);
+    }
+    
+
+    
   }
 
 
@@ -53,44 +73,44 @@ const Cadastro_de_Produtos = () => {
 
       <div className={styles.DivPrincipalInput}>
         <h1>Cadastro de Produtos</h1>
-        <form className={styles.FormPrincipalInput}>
+        <form className={styles.FormPrincipalInput} onSubmit={handleSubmit}>
           <div className={styles.divInputs}>
             <TextInput required
               placeholder="Produto"
-              value={value}
-              onChange={event => setValue(event.target.value)}
+              value={ProductName}
+              onChange={event => setProductName(event.target.value)}
             />
 
-            <TextInput required
+            {/* <TextInput required
               placeholder="Descrição"
-              value={descricao}
-              onChange={event => setDescricao(event.target.value)}
+              value={Description}
+              onChange={event => setDescription(event.target.value)}
+            /> */}
+
+            <TextInput required
+              placeholder="Quantity"
+              value={Quantity}
+              onChange={event => setQuantity(event.target.value)}
             />
 
             <TextInput required
-              placeholder="Quantidade"
-              value={Quantidade}
-              onChange={event => setQuantidade(event.target.value)}
+              placeholder="Price"
+              value={Price}
+              onChange={event => setPrice(event.target.value)}
             />
 
-            <TextInput required
-              placeholder="Preco"
-              value={Preco}
-              onChange={event => setPreco(event.target.value)}
-            />
-
-            <FileInput 
+            {/* <FileInput 
               name="FileImage"
               onChange={event => {
                 const fileList = event.target.files;
                 for (let i = 0; i < fileList.length; i += 1) {
                   const file = fileList[i];
                 }
-              }} />
+              }} /> */}
 
 
           </div>{/* Div dos botoes, */}
-          <Button type='submit' primary label="Confirmar" onClick={() =>  handleSubmit() } />
+          <Button type='submit' primary label="Confirmar"/>
 
           <Link href="/">
             <a>Voltar à Pagina Inicial</a>
