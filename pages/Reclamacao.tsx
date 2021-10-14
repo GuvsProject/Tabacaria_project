@@ -76,7 +76,7 @@ const Reclamacao = () => {
                         />
 
                         <TextArea
-                            placeholder="type here"
+                            placeholder="Descreva sua critica"
                             value={texto}
                             onChange={event => setTexto(event.target.value)}
                             />

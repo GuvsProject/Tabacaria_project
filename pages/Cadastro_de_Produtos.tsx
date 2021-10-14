@@ -87,13 +87,13 @@ const Cadastro_de_Produtos = () => {
             /> */}
 
             <TextInput required
-              placeholder="Quantity"
+              placeholder="Quantidade"
               value={Quantity}
               onChange={event => setQuantity(event.target.value)}
             />
 
             <TextInput required
-              placeholder="Price"
+              placeholder="Preço"
               value={Price}
               onChange={event => setPrice(event.target.value)}
             />
