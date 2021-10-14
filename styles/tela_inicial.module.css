@@ -1,0 +1,50 @@
+.navclassInicial {
+    display:flex;
+    justify-content: space-between;
+    padding: 1rem;
+    align-items: center;
+    background-color: #16ABD6;
+}
+
+.imgLogo{
+    height: 90px;
+}
+
+.itensHeader{
+    display: flex;
+    gap: 2rem;
+
+}
+.itensHeader a{
+    color:black;
+}
+.menuDropdown{
+    display:flex;
+    flex-direction: column;
+    gap:1rem;
+    padding:0.5rem 1rem;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.menuDropdown span{
+    font-size: 1rem;
+    color:#300D61;
+}
+
+.footerInicial {
+    display:flex;
+    flex-direction: column;
+    gap:1rem;
+    padding:0.5rem;
+    background-color: #21acd3;
+    align-items: left;
+    position: relative; 
+    min-height:fit-content;   
+    
+}
+
+.divfooter{
+    min-height: calc(100vh - 160px);
+}

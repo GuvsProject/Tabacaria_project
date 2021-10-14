@@ -8,6 +8,7 @@ import { DateInput } from 'grommet'
 import Alert from '@material-ui/lab/Alert';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
+import axios from 'axios'
 
 
 import styles from '../styles/Cadastro_de_Produtos.module.css'
@@ -25,15 +26,35 @@ const Cadastro_de_Usuarios = () => {
     //Toast
     const [visible, setVisible] = useState(false);
 
-    function handleSubmit() {
+    async function handleSubmit(event) {
 
+        event.preventDefault()
+        
+        try{
+        console.log(name, senha, email, cpf)
+        const response = await axios.post('http://localhost:3333/users',{
+            name: nome,
+            password: senha,
+            email: email,
+            cpf: cpf
+        })
+        console.log(response.data)
         setVisible(true)
-        // setTimeout(() => {setVisible(false)}, 500);
+        setTimeout(() => {setVisible(false)}, 5000);
+        setNome('')
+        setEmail('')
+        setCpf('')
+        setSenha_confirmar('')
+        setData('')
+        }   catch(err){
+        console.log(err)
+
+        }
     }
 
 
     return (
-        //   <Layout title="About | Next.js + TypeScript Example">
+          <Layout title="Cadastro">
         <>
             {visible &&
                 <Alert variant="filled" severity="success"
@@ -56,7 +77,7 @@ const Cadastro_de_Usuarios = () => {
 
             <div className={styles.DivPrincipalInput}>
                 <h1>Cadastro de Usuarios</h1>
-                <form className={styles.FormPrincipalInput}>
+                <form className={styles.FormPrincipalInput} onSubmit={handleSubmit}>
                     <div className={styles.divInputs}>
                         <TextInput required
                             placeholder="Nome Completo"
@@ -107,7 +128,7 @@ const Cadastro_de_Usuarios = () => {
    */}
 
                     </div>{/* Div dos botoes, */}
-                    <Button type='submit' primary label="Confirmar" onClick={() => handleSubmit()} />
+                    <Button type='submit' primary label="Confirmar"/>
 
                     <Link href="/">
                         <a>Voltar à Pagina Inicial</a>
@@ -120,7 +141,7 @@ const Cadastro_de_Usuarios = () => {
         </>
 
 
-        //</Layout>
+        </Layout>
 
     )
 }

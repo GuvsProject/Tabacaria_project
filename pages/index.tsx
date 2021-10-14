@@ -2,12 +2,17 @@ import Link from 'next/link'
 import Layout from '../components/Layout'
 
 const IndexPage = () => (
-  <Layout title="Home | Next.js + TypeScript Example">
-    <h1>Hello Next.js 👋</h1>
+  <Layout title="Tabacaria.io">
+    
     <p>
-      <Link href="/about">
-        <a>About</a>
-      </Link>
+      {/* <Link href="/about">
+        <a>Sobre Nós</a>
+      </Link> */}
+
+      {/* <Link href="/Cadastro_de_Produtos">
+        <a>Cadastrar Produto</a>
+      </Link> */}
+      
     </p>
   </Layout>
 )

@@ -23,7 +23,6 @@ const Cadastro_de_Produtos = () => {
   const [visible, setVisible] = useState(false);
 
   async function handleSubmit(event) {
-    console.log("xeske ")
     event.preventDefault()
     
     try{
@@ -50,7 +49,7 @@ const Cadastro_de_Produtos = () => {
 
 
   return (
-    //   <Layout title="About | Next.js + TypeScript Example">
+      <Layout title="Produtos">
     <>
       {visible &&
       <Alert variant="filled" severity="success"
@@ -125,7 +124,7 @@ const Cadastro_de_Produtos = () => {
 
 
 
-    //</Layout>
+    </Layout>
 
   )
 }
