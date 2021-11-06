@@ -5,10 +5,11 @@ const IndexPage = () => (
   <Layout title="Tabacaria.io">
     
     <p>
+    
       {/* <Link href="/about">
         <a>Sobre Nós</a>
       </Link> */}
-
+      
       {/* <Link href="/Cadastro_de_Produtos">
         <a>Cadastrar Produto</a>
       </Link> */}

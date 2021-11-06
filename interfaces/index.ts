@@ -13,3 +13,21 @@ export type amigo = {
   nomeAmigo: string
   id: number
 }
+
+
+export interface Product {
+  id: number
+  name: string
+  quantity: number
+  price: number
+  createdAt: string
+  updatedAt: string
+}
+
+// export interface Product_for_Alter {
+//   id: number
+//   Nome: string
+//   Quantidade: number
+//   Preco: number
+
+// }

@@ -1,21 +1,25 @@
 import Link from 'next/link'
 import Layout from '../components/Layout'
 import { useState } from 'react'
-import { Button,TextInput,TextArea } from 'grommet'
+import { Button, Box, } from 'grommet'
+import { FileInput } from 'grommet'
+import { TextInput } from 'grommet'
+import { DateInput } from 'grommet'
 import Alert from '@material-ui/lab/Alert';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import axios from 'axios'
 
+import DataTable from '../components/ListaProdutos'
+import BasicModal from '../components/Modal'
 
 import styles from '../styles/Cadastro_de_Produtos.module.css'
 
-const Reclamacao = () => {
+const Alterar_Produto = () => {
 
     //Inputs dos campos
-    const [titulo, setTitulo] = useState('');
-    const [texto, setTexto] = useState('');
-    const [userId,setUserId] = useState('')
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
 
     //Toast
     const [visible, setVisible] = useState(false);
@@ -25,17 +29,16 @@ const Reclamacao = () => {
         event.preventDefault()
         
         // try{
-        // console.log(userId, titulo, texto)
+        // console.log(email, senha)
         // const response = await axios.post('http://localhost:3333/users',{
-        //     userId: userId,
-        //     type: titulo,
-        //     message: texto
+        //     email: email,
+        //     password: senha
         // })
         // console.log(response.data)
         // setVisible(true)
         // setTimeout(() => {setVisible(false)}, 5000);
-        // setTitulo('')
-        // setTexto('')
+        // setEmail('')
+        // setSenha('')
         // }   catch(err){
         // console.log(err)
 
@@ -44,8 +47,9 @@ const Reclamacao = () => {
 
 
     return (
-          <Layout title="Reclamações">
+          <Layout title="Alterar Produto">
         <>
+
             {visible &&
                 <Alert variant="filled" severity="success"
                     action={
@@ -61,36 +65,37 @@ const Reclamacao = () => {
                         </IconButton>
                     }
                 >
-                    Reclamação enviada com sucesso !!
+                   Produto Alterado com sucesso !!
                 </Alert>
             }
-
-            <div className={styles.DivPrincipalInput}>
-                <h1>Reclamações</h1>
+            
+            {DataTable()}
+           
+            {/* <div className={styles.DivPrincipalInput}>
+                <h1>Login</h1>
                 <form className={styles.FormPrincipalInput} onSubmit={handleSubmit}>
                     <div className={styles.divInputs}>
-                        <TextInput required
-                            placeholder="Nome Completo"
-                            value={titulo}
-                            onChange={event => setTitulo(event.target.value)}
+                        <TextInput required type='email'
+                            placeholder="Email"
+                            value={email}
+                            onChange={event => setEmail(event.target.value)}
                         />
 
-                        <TextArea
-                            placeholder="Descreva sua critica"
-                            value={texto}
-                            onChange={event => setTexto(event.target.value)}
-                            />
+                        <TextInput required type='password'
+                            placeholder="Senha"
+                            value={senha}
+                            onChange={event => setSenha(event.target.value)}
+                        />
 
-                       
+
                     </div>{/* Div dos botoes, */}
-                    <Button type='submit' primary label="Registrar"/>
 
                     {/* <Link href="/">
                         <a>Voltar à Pagina Inicial</a>
                     </Link> */}
 
-                </form>
-            </div>
+                {/* </form>
+            </div> */}
 
 
         </>
@@ -101,4 +106,4 @@ const Reclamacao = () => {
     )
 }
 
-export default Reclamacao
+export default Alterar_Produto
