@@ -7,19 +7,17 @@
 export type User = {
   id: number
   name: string
-  Amigo?: amigo
-}
-export type amigo = {
-  nomeAmigo: string
-  id: number
+  password: string
 }
 
 
 export interface Product {
   id: number
   name: string
+  description: string
   quantity: number
   price: number
+  status: boolean
   createdAt: string
   updatedAt: string
 }

@@ -26,8 +26,8 @@ const Login = () => {
 
         event.preventDefault()
         
-        // try{
-        // console.log(email, senha)
+        try{
+        console.log(email, senha)
         // const response = await axios.post('http://localhost:3333/users',{
         //     email: email,
         //     password: senha
@@ -37,10 +37,10 @@ const Login = () => {
         // setTimeout(() => {setVisible(false)}, 5000);
         // setEmail('')
         // setSenha('')
-        // }   catch(err){
-        // console.log(err)
+        }   catch(err){
+        console.log(err)
 
-        // }
+        }
     }
 
 

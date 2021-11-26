@@ -24,3 +24,11 @@
 .MuiAlert-outlinedSuccess {
     color:black
 }
+
+.divcard {
+    display: flex;
+    justify-content: left;
+    align-items: right;
+    flex-direction: row;
+    gap: 5rem;
+}

@@ -24,8 +24,11 @@ async function getUserProducts():Promise<Product[]> {
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width:100 },
   { field: 'name', headerName: 'Nome ',width:300  },
+  { field: 'description', headerName: 'Descrição ', width:250 },
   { field: 'quantity', headerName: 'Quantidade ', width:300 },
-  { field: 'price', headerName: 'Preço ', width:300 },
+  { field: 'price', headerName: 'Preço R$ ', width:300 },
+  { field: 'status', headerName: 'Status do Produto ', width:200,}
+  
   // { field: 'DataCreate', headerName: 'DataCreate',  },
   // { field: 'DataUpdate', headerName: 'DataUpdate',  },
 ];

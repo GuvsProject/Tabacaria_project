@@ -1,9 +1,7 @@
 import Link from 'next/link'
 import Layout from '../components/Layout'
 import { useState } from 'react'
-import { Button, Box, } from 'grommet'
-import { FileInput } from 'grommet'
-import { TextInput } from 'grommet'
+import { Button, Box,FileInput, TextInput,Select  } from 'grommet'
 import Alert from '@material-ui/lab/Alert';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
@@ -14,23 +12,39 @@ import styles from '../styles/Cadastro_de_Produtos.module.css'
 const Cadastro_de_Produtos = () => {
 
   //Inputs dos campos
+  // const  [StatusModificado, setStatusmodificado] = useState(false)
   const [ProductName, setProductName] = useState('');
-  // const [Description, setDescription] = useState('');
+  const [Description, setDescription] = useState('');
   const [Quantity, setQuantity] = useState('');
   const [Price, setPrice] = useState('');
+  const [Status, setStatus] = useState('Inativo');
 
   //Toast
   const [visible, setVisible] = useState(false);
 
+  // function VerificaStatus(opcoes) {
+  //   if (Status == "Inativo"){
+  //     setStatusmodificado(false)
+  //   } else{
+  //     setStatusmodificado(true)
+
+  //   }
+    
+    
+  // }
+
   async function handleSubmit(event) {
     event.preventDefault()
     
+    // VerificaStatus(Status)
     try{
-      console.log(ProductName, Quantity, Price)
+      console.log(ProductName, Quantity, Price, Description, Status)
       const response = await axios.post('http://localhost:3333/products',{
         name: ProductName,
         quantity: Quantity,
-        price: Price
+        price: Price,
+        description: Description,
+        status: Status
       })
       console.log(response.data)
       setVisible(true)
@@ -38,6 +52,9 @@ const Cadastro_de_Produtos = () => {
       setProductName('')
       setQuantity('')
       setPrice('')
+      setDescription('')
+      setStatus('Inativo')
+      // setStatusmodificado(false)
     }catch(err){
       console.log(err)
 
@@ -80,11 +97,11 @@ const Cadastro_de_Produtos = () => {
               onChange={event => setProductName(event.target.value)}
             />
 
-            {/* <TextInput required
+            <TextInput required
               placeholder="Descrição"
               value={Description}
               onChange={event => setDescription(event.target.value)}
-            /> */}
+            />
 
             <TextInput required
               placeholder="Quantidade"
@@ -97,6 +114,13 @@ const Cadastro_de_Produtos = () => {
               value={Price}
               onChange={event => setPrice(event.target.value)}
             />
+
+          <Select
+            options={['Inativo', 'Ativo']}
+            value={Status}
+            onChange={({ option }) => setStatus(option)}
+          />
+
 
             {/* <FileInput 
               name="FileImage"
@@ -120,9 +144,6 @@ const Cadastro_de_Produtos = () => {
 
 
     </>
-
-
-
 
     </Layout>
 

@@ -4,8 +4,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import DataTable from '../components/ListaProdutos'
-import { TextInput } from 'grommet';
-import { Button } from 'grommet'
+import SelectProductStats from '../components/SelectProductStats'
+import { TextInput,Button, Select } from 'grommet';
 import { Product } from '../interfaces'
 import axios from 'axios'
 
@@ -34,22 +34,28 @@ export default function BasicModal<Props>({row, load}) {
 
   const [quantity, setQuantity] = useState('');
   const [price, setPrice] = useState('');
+  const [description, setDescription] = useState('');
+  const [status, setStatus] = useState('Inativo');
 
   useEffect(() =>{
     setQuantity(row.quantity.toString())
     setPrice(row.price.toString())
+    setDescription(row.description.toString())
+    // setStatus('')
   },[])
 
   async function handleSubmit(event) {
 
     event.preventDefault()
-    console.log(row.id,quantity,price)
+    console.log(row.id,quantity,price,description,status)
     setOpen(false)
     try{
     const response = await axios.patch('http://localhost:3333/products',{
       id: row.id,
       quantity: quantity,
-      price: price
+      price: price,
+      description: description,
+      status: status
     })
     await load()
     // console.log(response.data)
@@ -85,21 +91,50 @@ export default function BasicModal<Props>({row, load}) {
           <div>
                 <form onSubmit={handleSubmit} >
                     <div >
-                        <h1>A quantidade atual é: {row.quantity}</h1>
+                        <h1>Quantidade atual: {row.quantity}</h1>
                         <TextInput required type='text'
                             placeholder="Quantidade"
                             // value={quantity}
                             onChange={event => setQuantity(event.target.value)}
                             />
+                        <h1>Nova descrição</h1>
+                        <TextInput required type='text'
+                            placeholder="Descrição"
+                            // value={price}
+                            onChange={event => setDescription(event.target.value)}
+                            />
+                          <br></br>
 
-                          <h1>O preço atual é: {row.price}</h1>
+
+              
+                          <h1>Preço atual: R${row.price}</h1>
                         <TextInput required type='text'
                             placeholder="Preço"
                             // value={price}
                             onChange={event => setPrice(event.target.value)}
                             />
                           <br></br>
-                      <Button type='submit' primary label="Confirmar" />
+
+                       
+
+                        <h1>Status: </h1>
+                        {/* <Select
+                        options={['Inativo', 'Ativo']}
+                        value={status}
+                        onChange={({ option }) => console.log(status)}
+                        /> */}
+                        <SelectProductStats 
+                        opcao ={status}
+                        setOpcao ={setStatus}
+                        ></SelectProductStats>
+
+                        <br></br>
+                        <br></br>
+
+                       
+
+
+                        <Button type='submit' primary label="Confirmar" />
 
 
                     </div>{/* Div dos botoes, */}
