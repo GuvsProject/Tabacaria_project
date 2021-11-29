@@ -32,3 +32,17 @@
     flex-direction: row;
     gap: 5rem;
 }
+
+.divCardGrid {
+    display: flex;
+    gap:1rem;
+    flex-wrap: wrap;
+    width: 90%;
+    margin:0 auto;
+
+}
+
+.divCardGrid *{
+    flex-basis: calc(25%-1rem);
+    max-width: 273px;
+}

@@ -17,7 +17,7 @@ export interface Product {
   description: string
   quantity: number
   price: number
-  status: boolean
+  status: string
   createdAt: string
   updatedAt: string
 }
