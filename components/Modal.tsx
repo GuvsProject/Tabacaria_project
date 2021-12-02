@@ -117,7 +117,7 @@ export default function BasicModal<Props>({row, load}) {
 
                        
 
-                        <h1>Status: </h1>
+                        <h1>Status:{row.status}</h1>
                         {/* <Select
                         options={['Inativo', 'Ativo']}
                         value={status}

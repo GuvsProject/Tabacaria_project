@@ -10,7 +10,7 @@ import styles from '../styles/Cadastro_de_Produtos.module.css'
 
 const IndexPage = () => {
   async function getUserProducts():Promise<Product[]> {
-    const response = await axios.get('http://localhost:3333/products');
+    const response = await axios.get('http://localhost:3333/active');
     return response.data
   }
   const [auxiliar,setAuxiliar] = useState([])
