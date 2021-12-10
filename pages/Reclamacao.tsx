@@ -24,22 +24,23 @@ const Reclamacao = () => {
 
         event.preventDefault()
         
-        // try{
-        // console.log(userId, titulo, texto)
-        // const response = await axios.post('http://localhost:3333/users',{
-        //     userId: userId,
-        //     type: titulo,
-        //     message: texto
-        // })
-        // console.log(response.data)
-        // setVisible(true)
-        // setTimeout(() => {setVisible(false)}, 5000);
-        // setTitulo('')
-        // setTexto('')
-        // }   catch(err){
-        // console.log(err)
+        try{
+        console.log(userId, titulo, texto)
+        const response = await axios.post('http://localhost:3333/complains',{
+            // userId: userId,
+            type: titulo,
+            message: texto,
+            userId: 2
+        })
+        console.log(response.data)
+        setVisible(true)
+        setTimeout(() => {setVisible(false)}, 5000);
+        setTitulo('')
+        setTexto('')
+        }   catch(err){
+        console.log(err)
 
-        // }
+        }
     }
 
 
@@ -70,7 +71,7 @@ const Reclamacao = () => {
                 <form className={styles.FormPrincipalInput} onSubmit={handleSubmit}>
                     <div className={styles.divInputs}>
                         <TextInput required
-                            placeholder="Nome Completo"
+                            placeholder="Escreva um titulo a critica"
                             value={titulo}
                             onChange={event => setTitulo(event.target.value)}
                         />

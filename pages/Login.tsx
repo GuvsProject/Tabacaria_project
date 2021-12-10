@@ -25,22 +25,22 @@ const Login = () => {
     async function handleSubmit(event) {
 
         event.preventDefault()
-        
-        try{
-        console.log(email, senha)
-        // const response = await axios.post('http://localhost:3333/users',{
-        //     email: email,
-        //     password: senha
+        // try{
+        // console.log(email, senha)
+        // // const response = await axios.post('http://localhost:3333/login',{
+        //     "email": "teste@hotmail.com",
+        //     "password": "123"
         // })
         // console.log(response.data)
         // setVisible(true)
+        
         // setTimeout(() => {setVisible(false)}, 5000);
         // setEmail('')
         // setSenha('')
-        }   catch(err){
-        console.log(err)
+        // }   catch(err){
+        // console.log(err)
 
-        }
+        // }
     }
 
 
@@ -62,7 +62,7 @@ const Login = () => {
                         </IconButton>
                     }
                 >
-                   Efetuando login !!
+                Login Realizado !!
                 </Alert>
             }
 
