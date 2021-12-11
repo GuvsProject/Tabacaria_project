@@ -8,7 +8,7 @@ import BasicModal from '../components/Modal'
 
 
 async function getUserProducts():Promise<Product[]> {
-  const response = await axios.get('http://localhost:3333/products');
+  const response = await axios.get('https://apitabacaria-2gqbsph2wq-ue.a.run.app/products');
   return response.data
 }
 

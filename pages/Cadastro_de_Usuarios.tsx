@@ -32,7 +32,7 @@ const Cadastro_de_Usuarios = () => {
         
         try{
         console.log(name, senha, email, cpf)
-        const response = await axios.post('http://localhost:3333/users',{
+        const response = await axios.post('https://apitabacaria-2gqbsph2wq-ue.a.run.app/users',{
             name: nome,
             password: senha,
             email: email,

@@ -50,7 +50,7 @@ export default function BasicModal<Props>({row, load}) {
     console.log(row.id,quantity,price,description,status)
     setOpen(false)
     try{
-    const response = await axios.patch('http://localhost:3333/products',{
+    const response = await axios.patch('https://apitabacaria-2gqbsph2wq-ue.a.run.app/products',{
       id: row.id,
       quantity: quantity,
       price: price,

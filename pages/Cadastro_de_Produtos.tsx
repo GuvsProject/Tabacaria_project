@@ -39,7 +39,7 @@ const Cadastro_de_Produtos = () => {
     // VerificaStatus(Status)
     try{
       console.log(ProductName, Quantity, Price, Description, Status)
-      const response = await axios.post('http://localhost:3333/products',{
+      const response = await axios.post('https://apitabacaria-2gqbsph2wq-ue.a.run.app/products',{
         name: ProductName,
         quantity: Quantity,
         price: Price,
