@@ -4,11 +4,11 @@
 //
 // import { User } from 'path/to/interfaces';
 
-export type User = {
-  id: number
-  name: string
-  password?: any
-}
+// export type User = {
+//   id: number
+//   name: string
+//   password?: any
+// }
 
 
 export interface Product {

@@ -1,1 +1,0 @@
-import { GetStaticProps } from 'next'
