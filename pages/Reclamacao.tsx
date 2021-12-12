@@ -33,10 +33,10 @@ const Reclamacao = () => {
         //     userId: 1
         // })
         // console.log(response.data)
-        // setVisible(true)
-        // setTimeout(() => {setVisible(false)}, 5000);
-        // setTitulo('')
-        // setTexto('')
+        setVisible(true)
+        setTimeout(() => {setVisible(false)}, 5000);
+        setTitulo('')
+        setTexto('')
         // }   catch(err){
         // console.log(err)
 
