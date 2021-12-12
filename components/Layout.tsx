@@ -78,17 +78,17 @@ const Layout = ({ children, title = 'This is the default title' }: Props) => {
                       </a>
                     </Link>
 
-                    <Link href="/Visualiza_Reserva">
+                    {/* <Link href="/Visualiza_Reserva"> */}
                       <a>
                         <span>Visualizar Reservas</span>
                       </a>
-                    </Link>
+                    {/* </Link> */}
 
-                    <Link href="/Alterar_Dados">
+                    {/* <Link href="/Alterar_Dados"> */}
                       <a>
                         <span>Alterar Dados</span>
                       </a>
-                    </Link>
+                    {/* </Link> */}
 
                     <Link href="/Alterar_Produto">
                       <a>
