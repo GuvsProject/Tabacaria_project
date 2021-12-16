@@ -26,11 +26,10 @@ const Reclamacao = () => {
         
         // try{
         // console.log(userId, titulo, texto)
-        // const response = await axios.post('https://apitabacaria-2gqbsph2wq-ue.a.run.app/complains',{
-        //     // userId: userId,
-        //     type: titulo,
-        //     message: texto,
-        //     userId: 1
+        // const response = await axios.post('https://apitabacaria-2gqbsph2wq-ue.a.run.app/complain',{
+        //     userId: 6,
+        //     name: titulo,
+        //     message: texto
         // })
         // console.log(response.data)
         setVisible(true)

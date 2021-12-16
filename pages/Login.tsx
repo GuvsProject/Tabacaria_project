@@ -25,22 +25,22 @@ const Login = () => {
     async function handleSubmit(event) {
 
         event.preventDefault()
-        // try{
-        // console.log(email, senha)
-        // // const response = await axios.post('https://apitabacaria-2gqbsph2wq-ue.a.run.app/login',{
-        //     "email": "teste@hotmail.com",
-        //     "password": "123"
-        // })
-        // console.log(response.data)
-        // setVisible(true)
+        try{
+        console.log(email, senha)
+        const response = await axios.post('https://apitabacaria-2gqbsph2wq-ue.a.run.app/login',{
+            "email": email,
+            "password": senha
+        })
+        console.log(response.data)
+        setVisible(true)
         
-        // setTimeout(() => {setVisible(false)}, 5000);
-        // setEmail('')
-        // setSenha('')
-        // }   catch(err){
-        // console.log(err)
+        setTimeout(() => {setVisible(false)}, 5000);
+        setEmail('')
+        setSenha('')
+        }   catch(err){
+        console.log(err)
 
-        // }
+        }
     }
 
 

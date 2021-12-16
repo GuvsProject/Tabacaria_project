@@ -36,7 +36,8 @@ const Cadastro_de_Usuarios = () => {
             name: nome,
             password: senha,
             email: email,
-            cpf: cpf
+            cpf: cpf,
+            birthDate: '2021-10-20' //ano, mes, dia
         })
         console.log(response.data)
         setVisible(true)
@@ -44,6 +45,7 @@ const Cadastro_de_Usuarios = () => {
         setNome('')
         setEmail('')
         setCpf('')
+        setSenha('')
         setSenha_confirmar('')
         setData('')
         }   catch(err){
