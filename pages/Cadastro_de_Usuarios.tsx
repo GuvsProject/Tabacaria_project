@@ -91,7 +91,7 @@ const Cadastro_de_Usuarios = () => {
                             onChange={event => setEmail(event.target.value)}
                         />
 
-                        <TextInput required
+                        <TextInput required maxLength={11}
                             placeholder="Informe seu CPF"
                             value={cpf}
                             onChange={event => setCpf(event.target.value)}
@@ -103,14 +103,14 @@ const Cadastro_de_Usuarios = () => {
                             onChange={event => setSenha(event.target.value)}
                         />
 
-                        <TextInput required type='password'
-                            placeholder="confirme sua senha"
+                        {/* <TextInput required type='password'
+                            placeholder="Confirme sua senha"
                             value={senha_confirmar}
                             onChange={event => setSenha_confirmar(event.target.value)}
-                        />
+                        /> */}
 
                         <DateInput required
-                            format="mm/dd/yyyy"
+                            format="dd/mm/yyyy"
                             value={(new Date()).toISOString()}
                             // onChange={({ value }) => { }}
                             // onChange={event => setData(event.target.value)}
