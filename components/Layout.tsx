@@ -12,7 +12,7 @@ type Props = {
 
 const Layout = ({ children, title = 'This is the default title' }: Props) => {
 
-  const [logado, setLogado] = useState(false);
+  const [logado, setLogado] = useState(true);
 
   return (
 
@@ -93,6 +93,18 @@ const Layout = ({ children, title = 'This is the default title' }: Props) => {
                     <Link href="/Alterar_Produto">
                       <a>
                         <span>Alterar Produto</span>
+                      </a>
+                    </Link>
+
+                     <Link href="/Login">
+                      <a>
+                        <span onClick ={ () => setLogado(true)}>Logar</span>
+                      </a>
+                    </Link>
+
+                    <Link href="/Cadastro_de_Usuarios">
+                      <a>
+                        <span >Cadastre-se</span>
                       </a>
                     </Link>
 
