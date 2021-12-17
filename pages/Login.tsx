@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Layout from '../components/Layout'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button, Box, } from 'grommet'
 import { FileInput } from 'grommet'
 import { TextInput } from 'grommet'
@@ -8,8 +8,8 @@ import { DateInput } from 'grommet'
 import Alert from '@material-ui/lab/Alert';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
-import axios from 'axios'
-
+import axios from 'axios';
+import Router from "next/router";
 
 import styles from '../styles/Cadastro_de_Produtos.module.css'
 
@@ -18,9 +18,20 @@ const Login = () => {
     //Inputs dos campos
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
-
+    const [logado, setLogado] = useState(false);
+    
     //Toast
     const [visible, setVisible] = useState(false);
+
+    useEffect(() => { 
+        if(logado ){
+          Router.push('/')
+        }  
+      }
+      , [logado]);
+    //   return (
+    //     null
+    //   )
 
     async function handleSubmit(event) {
 
@@ -32,6 +43,9 @@ const Login = () => {
             "password": senha
         })
         console.log(response.data)
+        console.log("separador -------")
+     
+        setLogado(response.data)
         setVisible(true)
         
         setTimeout(() => {setVisible(false)}, 5000);
@@ -39,7 +53,7 @@ const Login = () => {
         setSenha('')
         }   catch(err){
         console.log(err)
-
+        
         }
     }
 
