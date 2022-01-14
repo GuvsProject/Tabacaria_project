@@ -4,23 +4,16 @@ import Head from 'next/head'
 import { Menu, Button, DropButton } from 'grommet'
 
 import styles from '../styles/tela_inicial.module.css'
-import { parseCookies, destroyCookie } from 'nookies'
-import { GetServerSideProps } from 'next'
 
 type Props = {
   children?: ReactNode
   title?: string
-  logado?: boolean
 }
 
-const Layout = ({ children, title = 'This is the default title',logado }: Props) => {
+const Layout = ({ children, title = 'This is the default title' }: Props) => {
 
-  function signout() {
-    logado = false
-    destroyCookie(null, 'nextauth.token')
-    destroyCookie(null, 'email.token')
-  }
-  
+  const [logado, setLogado] = useState(false);
+
   return (
 
     <>
@@ -51,11 +44,11 @@ const Layout = ({ children, title = 'This is the default title',logado }: Props)
           <div>
 
             {
-              // logado || logado &&
               logado &&
               
               // <Menu label="Conta" 
               // items={[
+              // { label: 'Sair', onClick: () => setLogado(false) },
               // { label: 'Cadastrar Produto',
               // onClick: () => {
               //       <Link href="/Cadastro_de_Produtos">
@@ -76,7 +69,7 @@ const Layout = ({ children, title = 'This is the default title',logado }: Props)
                 dropContent={
                   <div className={styles.menuDropdown}>
                    <Link href="/">
-                    <a><span onClick ={ () => signout()}>Sair</span></a>
+                    <a><span onClick ={ () => setLogado(false)}>Sair</span></a>
                     </Link>
 
                     <Link href="/Cadastro_de_Produtos">
@@ -102,14 +95,27 @@ const Layout = ({ children, title = 'This is the default title',logado }: Props)
                         <span>Alterar Produto</span>
                       </a>
                     </Link>
+
+                     <Link href="/Login">
+                      <a>
+                        <span onClick ={ () => setLogado(true)}>Logar</span>
+                      </a>
+                    </Link>
+
+                    <Link href="/Cadastro_de_Usuarios">
+                      <a>
+                        <span >Cadastre-se</span>
+                      </a>
+                    </Link>
+
                   </div>
                 }
               />
             }
 
             {
-              // !logado &&
               !logado &&
+              //  <Button primary label="Logar" onClick ={ () => setLogado(true)}/>
               <DropButton
                 label="Entre aqui !"
                 dropAlign={{ top: 'bottom', right: 'right' }}
@@ -117,7 +123,7 @@ const Layout = ({ children, title = 'This is the default title',logado }: Props)
                   <div className={styles.menuDropdown}>
                     <Link href="/Login">
                       <a>
-                        <span>Logar</span>
+                        <span onClick ={ () => setLogado(true)}>Logar</span>
                       </a>
                     </Link>
 
@@ -154,33 +160,3 @@ const Layout = ({ children, title = 'This is the default title',logado }: Props)
 }
 
 export default Layout
-
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  // const apiClient = getAPIClient(ctx);
-  const { ['nextauth.token']: token } = parseCookies(ctx)
-  var logado = false
-  // if (!token) {
-  //   return {
-  //     redirect: {
-  //       destination: '/Login',
-  //       permanent: false,
-  //     }
-  //   }
-  // }
-  if (!token) {
-    console.log('nao foi')
-    logado = false
-  } else {
-    console.log("foi?")
-    logado = true
-    console.log(logado)
-  }
-
-
-  // await apiClient.get('/users')
-
-  return {
-    props: {logado}
-  }
-}

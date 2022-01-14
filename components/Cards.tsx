@@ -10,19 +10,20 @@ import Box from '@mui/material/Box';
 import { Product } from '../interfaces'
 
 import styles from '../styles/Cadastro_de_Produtos.module.css'
+import BasicModalReserva from './Modal_Reserva';
 
 // export default function MediaCard() {
   // return (
 
 // }
 
-// interface Props {
-//   Product
-// }
+interface Props {
+  Product
+}
 
-export default function OutlinedCard<Product>({id, name, price, description}) {
+export default function OutlinedCard<Product>({id, name, price, quantity, description, logado, user}) {
   
-  // const [idProduto,setIdProduto] = useState(null)
+  const [idProduto,setIdProduto] = useState(null)
 
   const card =(
     <React.Fragment>
@@ -42,6 +43,10 @@ export default function OutlinedCard<Product>({id, name, price, description}) {
       <Typography gutterBottom variant="h6" component="div">
         {/* Preço:  */}
         R$ {price}
+        {/* {console.log(user['email'])} */}
+        {console.log(quantity)}
+
+
       </Typography>
 
       <Typography variant="body2" color="text.secondary">
@@ -51,8 +56,26 @@ export default function OutlinedCard<Product>({id, name, price, description}) {
     </CardContent>
     <CardActions>
       {/* <Button size="small"></Button> */}
-      <Button size="small">Solicitar Reserva</Button>
+      { logado &&
+      <Button size="small"  
+      onClick={() => {
+        console.log("clicou na solicitar reserva");
+      }} 
+      >
+      {
+        <BasicModalReserva ></BasicModalReserva>
+
+      }
+
+      </Button>
+      }
+      
+      {/* {
+        clicou && 
+      <BasicModalReserva ></BasicModalReserva>
+      } */}
       {/* <Button size="small">Abrir em outra pagina</Button> */}
+
     </CardActions>
     {/* <br></br> */}
   </Card>

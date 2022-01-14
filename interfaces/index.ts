@@ -7,7 +7,12 @@
 export type User = {
   id: number
   name: string
-  password?: any
+  password: any
+  email: string
+  cpf: number
+  birtDate: string
+  createdAt: string
+  updatedAt: string
 }
 
 
@@ -21,11 +26,3 @@ export interface Product {
   createdAt: string
   updatedAt: string
 }
-
-// export interface Product_for_Alter {
-//   id: number
-//   Nome: string
-//   Quantidade: number
-//   Preco: number
-
-// }

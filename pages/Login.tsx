@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Layout from '../components/Layout'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Button, Box, } from 'grommet'
 import { FileInput } from 'grommet'
 import { TextInput } from 'grommet'
@@ -12,16 +12,34 @@ import axios from 'axios';
 import Router from "next/router";
 
 import styles from '../styles/Cadastro_de_Produtos.module.css'
+import { parseCookies, setCookie } from 'nookies'
+import { v4 as uuid } from 'uuid'
 
 const Login = () => {
 
     //Inputs dos campos
     const [email, setEmail] = useState('');
-    const [senha, setSenha] = useState('');
+    const [password, setPassword] = useState('');
     const [logado, setLogado] = useState(false);
     
     //Toast
     const [visible, setVisible] = useState(false);
+    // const [token, setToken] = useState("");
+    var token
+    // const { 'nextauth.token': token } = uuid()
+
+    // const { signIn } = useContext(AuthContext)
+    // useEffect(() => {
+    //     const { 'nextauth.token': token } = parseCookies()
+    
+    //     if (token) {
+    //     //   recoverUserInformation().then(response => {
+    //     //     setUser(response.user)
+    //     console.log("teste")
+    //     //   })
+    //     }
+    //   }, [])
+
 
     useEffect(() => { 
         if(logado ){
@@ -29,6 +47,7 @@ const Login = () => {
         }  
       }
       , [logado]);
+
     //   return (
     //     null
     //   )
@@ -37,10 +56,10 @@ const Login = () => {
 
         event.preventDefault()
         try{
-        console.log(email, senha)
+        console.log(email, password)
         const response = await axios.post('https://apitabacaria-2gqbsph2wq-ue.a.run.app/login',{
             "email": email,
-            "password": senha
+            "password": password
         })
         console.log(response.data)
         console.log("separador -------")
@@ -48,18 +67,35 @@ const Login = () => {
         setLogado(response.data)
         setVisible(true)
         
+        // handleSignIn({email, password})
+        // setToken(uuid())
+        token = uuid()
+        console.log(token)
+        
+        setCookie(undefined, 'nextauth.token', token, {
+            maxAge: 60 * 60 * 1, // 1 hour
+          })
+        
+         setCookie(undefined, 'email.token', email, {
+            maxAge: 60 * 60 * 1, // 1 hour
+          })
+
         setTimeout(() => {setVisible(false)}, 5000);
         setEmail('')
-        setSenha('')
+        setPassword('')
         }   catch(err){
         console.log(err)
         
         }
     }
 
+    // async function handleSignIn(data) {
+    //     await signIn(data)
+    //   }
 
     return (
-          <Layout title="Login">
+          <Layout title="Login"
+          >
         <>
             {visible &&
                 <Alert variant="filled" severity="success"
@@ -91,9 +127,9 @@ const Login = () => {
                         />
 
                         <TextInput required type='password'
-                            placeholder="Senha"
-                            value={senha}
-                            onChange={event => setSenha(event.target.value)}
+                            placeholder="password"
+                            value={password}
+                            onChange={event => setPassword(event.target.value)}
                         />
 
 
