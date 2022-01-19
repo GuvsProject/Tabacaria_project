@@ -4,7 +4,6 @@ import Layout from '../components/Layout'
 import axios from 'axios'
 import { Product, User } from '../interfaces';
 import { useCallback,useEffect, useState } from 'react';
-import { resolve } from 'path';
 
 import styles from '../styles/Cadastro_de_Produtos.module.css'
 import { GetServerSideProps } from 'next';
@@ -39,14 +38,15 @@ const IndexPage = ({logadoB,emailLogado}) => {
     
   }, [getData,getmakeUser])
   
-  console.log(logadoB)
+  //console.log(logadoB)
   // console.log(usuario['email'])
   //pega usuario conforme email retornado
   
   async function getUser(email):Promise<User[]> {
 
     try{
-      const response = await axios.post('http://localhost:3333/singleUser',{
+      // const response = await axios.post('http://localhost:3333/singleUser',{
+      const response = await axios.post('https://apitabacaria-2gqbsph2wq-ue.a.run.app/singleUser',{
               "email": email,
           })
         
@@ -67,8 +67,8 @@ const IndexPage = ({logadoB,emailLogado}) => {
     <br></br>
     <div className={styles.divCardGrid}>
       
+      {/* {console.log(usuario)} */}
     {
-        
         auxiliar.map((auxiliar) => 
           (<OutlinedCard key = {auxiliar.id}
             id = {auxiliar.id}
@@ -104,18 +104,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   var emailLogado = ""
 
   if (!token) {
-    console.log('token de login nao gerado')
+    // console.log('token de login nao gerado')
     logadoB = false
   } else {
-    console.log("token de login gerado")
+    // console.log("token de login gerado")
     logadoB = true
     emailLogado = cookie_email['email.token']
   }
   
-  // console.log(cookie_email) //pega EMAIL
-  console.log(cookie_email['email.token']) //pega EMAIL
-  // console.log(token)
-
+  // console.log(cookie_email['email.token']) //pega EMAIL
 
   return {
     props: { logadoB, emailLogado }

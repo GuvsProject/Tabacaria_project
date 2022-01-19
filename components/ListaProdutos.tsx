@@ -12,15 +12,6 @@ async function getUserProducts():Promise<Product[]> {
   return response.data
 }
 
-// async function handleSubmit(event) {
-
-//   event.preventDefault()
-  
-
-// }
-
-
-
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width:100 },
   { field: 'name', headerName: 'Nome ',width:300  },

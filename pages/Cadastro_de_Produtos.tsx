@@ -6,10 +6,13 @@ import Alert from '@material-ui/lab/Alert';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import axios from 'axios'
+import { GetServerSideProps } from 'next';
+import { parseCookies } from 'nookies';
+import  nookies  from 'nookies';
 
 import styles from '../styles/Cadastro_de_Produtos.module.css'
 
-const Cadastro_de_Produtos = () => {
+const Cadastro_de_Produtos = ({logadoB}) => {
 
   //Inputs dos campos
   // const  [StatusModificado, setStatusmodificado] = useState(false)
@@ -66,7 +69,7 @@ const Cadastro_de_Produtos = () => {
 
 
   return (
-      <Layout title="Produtos">
+      <Layout title="Produtos" logado={logadoB}>
     <>
       {visible &&
       <Alert variant="filled" severity="success"
@@ -151,3 +154,21 @@ const Cadastro_de_Produtos = () => {
 }
 
 export default Cadastro_de_Produtos
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+
+  const { ['nextauth.token']: token } = parseCookies(ctx)
+  var logadoB = false
+
+  if (!token) {
+    console.log('token de login nao gerado')
+    logadoB = false
+  } else {
+    console.log("token de login gerado")
+    logadoB = true
+  }
+  
+  return {
+    props: { logadoB }
+  }
+}

@@ -6,7 +6,7 @@ import Modal from '@mui/material/Modal';
 import DataTable from '../components/ListaProdutos'
 // import SelectProductStats from '../components/SelectProductStats'
 import { TextInput,Button, Select } from 'grommet';
-import { Product } from '../interfaces'
+import { Order, Product } from '../interfaces'
 import axios from 'axios'
 
 import styles from '../styles/Cadastro_de_Produtos.module.css'
@@ -24,11 +24,11 @@ const style = {
 };
 
 interface Props {
-  // row:Product,
+  row:Order,
   load?:any
 }
 // export default function BasicModalReserva<Props>({row, load}) {
-export default function BasicModalReserva<Props>() {
+export default function BasicModalReserva<Props>({row,load}) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -51,14 +51,14 @@ export default function BasicModalReserva<Props>() {
     // console.log(row.id,quantity,price,description,status)
     setOpen(false)
     try{
-    // const response = await axios.patch('https://apitabacaria-2gqbsph2wq-ue.a.run.app/products',{
-    //   id: row.id,
-    //   quantity: quantity,
+    // const response = await axios.post('https://apitabacaria-2gqbsph2wq-ue.a.run.app/order?',{
+    //   userId: '',
+    //   status: 'pendente',
     //   price: price,
     //   description: description,
     //   status: status
     // })
-    // await load()
+    await load()
     
     // console.log(response.data)
     // setVisible(true)
@@ -76,7 +76,7 @@ export default function BasicModalReserva<Props>() {
 
   return (
     <div>
-      <Button primary label="Solicitar Reserva" onClick={handleOpen}/>
+      <Button primary label="Visualizar Solicitações" onClick={handleOpen}/>
 
       {/* <Button onClick={handleOpen}>Alterar Produto Selecionado</Button> */}
       <Modal

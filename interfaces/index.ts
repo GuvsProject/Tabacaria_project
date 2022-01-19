@@ -26,3 +26,12 @@ export interface Product {
   createdAt: string
   updatedAt: string
 }
+
+export interface Order {
+  userId: number,
+  productId: number,
+  quantity: number,
+  price: number,
+  status: string,
+  orderDate: string
+}
