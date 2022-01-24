@@ -8,6 +8,7 @@ import BasicModal from '../components/Modal'
 import BasicModalReserva from './Modal_Reserva';
 import { parseCookies } from 'nookies';
 import  nookies  from 'nookies';
+import { GetServerSideProps } from 'next';
 
 interface Props {
   logadoB,
@@ -18,13 +19,15 @@ export default function DataTableR({logadoB, emailLogado}) {
   const [rows,setrows] = useState([])
   const [row,setrow] = useState(null)
   const [usuario, setUsuario] = useState([])
-  var teste
+
   const InitComponent = useCallback(async()=>{
-    
+  
+  // console.log(logadoB)
   if (logadoB) {
-    // getmakeUser()
-    console.log(usuario)
-    const retorno_ordem = await getUserOrder()
+    const usuario_auxiliar = await getmakeUser()
+  //   // console.log(usuario)
+    const retorno_ordem = await getUserOrder(usuario_auxiliar)
+    console.log(retorno_ordem)
     setrows(retorno_ordem)
     
   }
@@ -36,6 +39,8 @@ export default function DataTableR({logadoB, emailLogado}) {
   // console.log(usuario)
   async function getUser(email):Promise<User[]> {
 
+    // console.log(email)
+    // console.log(emailLogado) 
     try{
       // const response = await axios.post('http://localhost:3333/singleUser',{
       const response = await axios.post('https://apitabacaria-2gqbsph2wq-ue.a.run.app/singleUser',{
@@ -54,27 +59,24 @@ export default function DataTableR({logadoB, emailLogado}) {
   const getmakeUser = useCallback(async () => {
     const data2 = await getUser(emailLogado);
     setUsuario(data2);
-    console.log(data2);
+    return data2
+    // console.log(data2);
   }, [setUsuario])
 
 
   useEffect(()=>{
     InitComponent()
-    getmakeUser()
-    },[InitComponent,getmakeUser])
+    },[InitComponent])
 
   
-async function getUserOrder():Promise<Order[]> {
-  // if (logadoB) {
-  // getmakeUser()
-  // console.log(usuario['id'])
-  // id = usuario['id']
-  console.log(usuario)
+async function getUserOrder(usuario_order):Promise<Order[]> {
+
+  console.log(usuario_order)
     try {
 
       // const response = await axios.post('http://localhost:3333/orderbyuser',{
       const response = await axios.post('https://apitabacaria-2gqbsph2wq-ue.a.run.app/orderbyuser',{
-        'userId': usuario['id']
+        'userId': usuario_order['id']
       });
   
       return response.data
@@ -84,7 +86,6 @@ async function getUserOrder():Promise<Order[]> {
     }
  
 
-  // }
 }
 
 const columns: GridColDef[] = [
@@ -107,7 +108,7 @@ const columns: GridColDef[] = [
 
   // async function loadGrid(){
   // if(logadoB) {
-  //   getmakeUser()
+  //    await getmakeUser()
   //   const retorno_ordem = await getUserOrder()
   //   setrows(retorno_ordem)
 

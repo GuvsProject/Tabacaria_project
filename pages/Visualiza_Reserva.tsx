@@ -12,7 +12,7 @@ import DataTableR from '../components/ListaReservas';
 const Visualiza_Reserva = ({logadoB, emailLogado}) => {
 
     //Toast
-    const [visible, setVisible] = useState(false);
+    // const [visible, setVisible] = useState(false);
 
     return (
           <Layout title="Solicitações de Reservas" logado={logadoB}>
@@ -41,7 +41,7 @@ const Visualiza_Reserva = ({logadoB, emailLogado}) => {
                 logadoB={logadoB}
                 emailLogado={emailLogado}
             ></DataTableR>}
-
+            {/* <DataTableR logadoB={undefined} emailLogado={undefined}></DataTableR> */}
 
 
         </>
