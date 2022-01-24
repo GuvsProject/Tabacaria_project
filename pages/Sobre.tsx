@@ -1,8 +1,12 @@
+import { GetServerSideProps } from 'next'
 import Link from 'next/link'
+import { parseCookies } from 'nookies'
+import  nookies  from 'nookies';
+
 import Layout from '../components/Layout'
 
-const Sobre = () => (
-  <Layout title="Sobre Nós">
+const Sobre = ({logadoB,emailLogado}) => (
+  <Layout title="Sobre Nós" logado={logadoB}>
     <h1>Nossa Historia</h1>
     <div>
 
@@ -37,3 +41,24 @@ const Sobre = () => (
 )
 
 export default Sobre
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+
+  const { ['nextauth.token']: token } = parseCookies(ctx)
+  const  cookie_email = nookies.get(ctx)
+  var logadoB = false
+  var emailLogado = ""
+
+  if (!token) {
+    console.log('token de login nao gerado')
+    logadoB = false
+  } else {
+    console.log("token de login gerado")
+    logadoB = true
+    emailLogado = cookie_email['email.token']
+  }
+
+  return {
+    props: { logadoB, emailLogado }
+  }
+}

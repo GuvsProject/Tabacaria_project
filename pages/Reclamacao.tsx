@@ -6,11 +6,13 @@ import Alert from '@material-ui/lab/Alert';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import axios from 'axios'
-
+import { parseCookies } from 'nookies'
+import  nookies  from 'nookies';
 
 import styles from '../styles/Cadastro_de_Produtos.module.css'
+import { GetServerSideProps } from 'next';
 
-const Reclamacao = () => {
+const Reclamacao = ({logadoB,emailLogado}) => {
 
     //Inputs dos campos
     const [titulo, setTitulo] = useState('');
@@ -44,7 +46,7 @@ const Reclamacao = () => {
 
 
     return (
-          <Layout title="Reclamações">
+          <Layout title="Reclamações" logado={logadoB}>
         <>
             {visible &&
                 <Alert variant="filled" severity="success"
@@ -102,3 +104,25 @@ const Reclamacao = () => {
 }
 
 export default Reclamacao
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+
+    const { ['nextauth.token']: token } = parseCookies(ctx)
+    const  cookie_email = nookies.get(ctx)
+    var logadoB = false
+    var emailLogado = ""
+  
+    if (!token) {
+      console.log('token de login nao gerado')
+      logadoB = false
+    } else {
+      console.log("token de login gerado")
+      logadoB = true
+      emailLogado = cookie_email['email.token']
+    }
+  
+    return {
+      props: { logadoB, emailLogado }
+    }
+  }
+  
