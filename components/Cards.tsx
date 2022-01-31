@@ -38,7 +38,7 @@ export default function OutlinedCard<Product>({id, name, price, quantity, descri
     if (Number(quantidadeDigitada) > 0) {
 
       try{
-        const response = await axios.post('http://localhost:3333/order',{
+        const response = await axios.post('https://apitabacaria-2gqbsph2wq-ue.a.run.app/order',{
                 "userId": user['id'],
                 "productId": id,
                 "quantity": quantidadeDigitada,
