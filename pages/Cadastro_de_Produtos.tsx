@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Layout from '../components/Layout'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Button, Box,FileInput, TextInput,Select  } from 'grommet'
 import Alert from '@material-ui/lab/Alert';
 import CloseIcon from '@material-ui/icons/Close';
@@ -11,8 +11,9 @@ import { parseCookies } from 'nookies';
 import  nookies  from 'nookies';
 
 import styles from '../styles/Cadastro_de_Produtos.module.css'
+import { User } from '../interfaces';
 
-const Cadastro_de_Produtos = ({logadoB}) => {
+const Cadastro_de_Produtos = ({logadoB, emailLogado}) => {
 
   //Inputs dos campos
   // const  [StatusModificado, setStatusmodificado] = useState(false)
@@ -25,16 +26,39 @@ const Cadastro_de_Produtos = ({logadoB}) => {
   //Toast
   const [visible, setVisible] = useState(false);
 
-  // function VerificaStatus(opcoes) {
-  //   if (Status == "Inativo"){
-  //     setStatusmodificado(false)
-  //   } else{
-  //     setStatusmodificado(true)
+  const [usuario, setUsuario] = useState(null)
 
-  //   }
+    //user
+    const getmakeUser = useCallback(async () => {
+    const data2 = await getUser(emailLogado);
+    setUsuario(data2);
+    // console.log(data2);
+    return data2
+    }, [setUsuario])
+
+    useEffect(() => {
+    getmakeUser();
     
+    }, [getmakeUser])
     
-  // }
+    async function getUser(email):Promise<User>  {
+
+    try{
+        // const response = await axios.post('http://localhost:3333/singleUser',{
+        const response = await axios.post('https://apitabacaria-2gqbsph2wq-ue.a.run.app/singleUser',{
+                "email": email,
+            })
+        
+        // console.log(response.data)
+        return response.data
+    } catch(err) {
+        console.log(err)
+        
+    }
+    
+    }
+
+
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -69,7 +93,7 @@ const Cadastro_de_Produtos = ({logadoB}) => {
 
 
   return (
-      <Layout title="Produtos" logado={logadoB}>
+      <Layout title="Produtos" logado={logadoB} admin={usuario?.admin}>
     <>
       {visible &&
       <Alert variant="filled" severity="success"
@@ -158,7 +182,9 @@ export default Cadastro_de_Produtos
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const { ['nextauth.token']: token } = parseCookies(ctx)
+  const  cookie_email = nookies.get(ctx)
   var logadoB = false
+  var emailLogado = ""
 
   if (!token) {
     console.log('token de login nao gerado')
@@ -166,9 +192,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   } else {
     console.log("token de login gerado")
     logadoB = true
+    emailLogado = cookie_email['email.token']
   }
   
   return {
-    props: { logadoB }
+    props: { logadoB, emailLogado }
   }
 }

@@ -65,10 +65,10 @@ const Login = () => {
         console.log("separador -------")
      
         setLogado(response.data)
-        setVisible(true)
         
-        // handleSignIn({email, password})
-        // setToken(uuid())
+        
+        
+        setVisible(true)
         token = uuid()
         console.log(token)
         
@@ -83,6 +83,7 @@ const Login = () => {
         setTimeout(() => {setVisible(false)}, 5000);
         setEmail('')
         setPassword('')
+
         }   catch(err){
         console.log(err)
         

@@ -33,7 +33,7 @@ export default function OutlinedCard<Product>({id, name, price, quantity, descri
   const [quantidadeDigitada, setQuantidadeDigitada] = useState('');
 
   async function handlesubmit() {
-    console.log(user['id'],id,quantity,price,new Date())
+    // console.log(user['id'],id,quantity,price,new Date())
 
     if (Number(quantidadeDigitada) > 0) {
 
@@ -48,6 +48,7 @@ export default function OutlinedCard<Product>({id, name, price, quantity, descri
             })
           setQuantidadeDigitada('')
           setVisible(false)
+          // atualiza_quantidade(idProduto, quantidadeDigitada, price,description)
           // console.log(response.data)
           return response.data
       } catch(err) {
@@ -58,6 +59,28 @@ export default function OutlinedCard<Product>({id, name, price, quantity, descri
     }
 
   }
+
+  async function atualiza_quantidade(id_passado, quantidade_passada, price_passado, description) {
+    console.log(id)
+    if (quantity < 0) {
+      var status_produto = "Inativo"
+    }
+    try{
+      // const response = await axios.patch('https://apitabacaria-2gqbsph2wq-ue.a.run.app/products',{
+      const response = await axios.patch('http://localhost:3333/products',{
+        id: id_passado,
+        quantity: quantidade_passada,
+        price: price_passado,
+        description: description,
+        status: status_produto
+      })
+
+      }   catch(err){
+      console.log(err)
+  
+      }
+  }
+
 
   const card =(
     <React.Fragment>
@@ -78,7 +101,7 @@ export default function OutlinedCard<Product>({id, name, price, quantity, descri
         {/* Preço:  */}
         R$ {price}
         {/* {console.log(user['email'])} */}
-        {console.log(quantity)}
+        {/* {console.log(quantity)} */}
 
 
       </Typography>

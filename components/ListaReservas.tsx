@@ -18,7 +18,7 @@ interface Props {
 export default function DataTableR({logadoB, emailLogado}) {
   const [rows,setrows] = useState([])
   const [row,setrow] = useState(null)
-  const [usuario, setUsuario] = useState([])
+  const [usuario, setUsuario] = useState(null)
 
   const InitComponent = useCallback(async()=>{
   
@@ -37,7 +37,7 @@ export default function DataTableR({logadoB, emailLogado}) {
   // console.log(logadoB)  
   // console.log(emailLogado)
   // console.log(usuario)
-  async function getUser(email):Promise<User[]> {
+  async function getUser(email):Promise<User>  {
 
     // console.log(email)
     // console.log(emailLogado) 
@@ -60,7 +60,6 @@ export default function DataTableR({logadoB, emailLogado}) {
     const data2 = await getUser(emailLogado);
     setUsuario(data2);
     return data2
-    // console.log(data2);
   }, [setUsuario])
 
 

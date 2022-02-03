@@ -18,8 +18,8 @@ const IndexPage = ({logadoB,emailLogado}) => {
   }
 
   const [auxiliar,setAuxiliar] = useState([])
-  const [usuario, setUsuario] = useState([])
-
+  const [usuario, setUsuario] = useState(null)
+  
   const getData = useCallback(async () => {
     const data = await getUserProducts();
     setAuxiliar(data);
@@ -29,20 +29,21 @@ const IndexPage = ({logadoB,emailLogado}) => {
   const getmakeUser = useCallback(async () => {
     const data2 = await getUser(emailLogado);
     setUsuario(data2);
+    // console.log(data2);
+    return data2
   }, [setUsuario])
 
-  
   useEffect(() => {
     getData();
     getmakeUser();
     
   }, [getData,getmakeUser])
-  
+ 
   //console.log(logadoB)
   // console.log(usuario['email'])
   //pega usuario conforme email retornado
   
-  async function getUser(email):Promise<User[]> {
+  async function getUser(email):Promise<User> {
 
     try{
       // const response = await axios.post('http://localhost:3333/singleUser',{
@@ -60,14 +61,15 @@ const IndexPage = ({logadoB,emailLogado}) => {
   }
 
   return(
-    <Layout title="Mario's Tabacaria" logado={logadoB}>
+    // <Layout title="Mario's Tabacaria" logado={logadoB} admin={usuario?.['admin']}>
+    <Layout title="Mario's Tabacaria" logado={logadoB} admin={usuario?.admin}>
     <>
 
     
     <br></br>
     <div className={styles.divCardGrid}>
       
-      {/* {console.log(usuario)} */}
+      {console.log(usuario)}
     {
         auxiliar.map((auxiliar) => 
           (<OutlinedCard key = {auxiliar.id}

@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
 import { Menu, Button, DropButton } from 'grommet'
@@ -6,19 +6,29 @@ import { Menu, Button, DropButton } from 'grommet'
 import styles from '../styles/tela_inicial.module.css'
 import { parseCookies, destroyCookie } from 'nookies'
 import { GetServerSideProps } from 'next'
+import { Router } from 'next/router'
 
 type Props = {
   children?: ReactNode
   title?: string
   logado?: boolean
+  admin?: any
 }
 
-const Layout = ({ children, title = 'This is the default title',logado }: Props) => {
+const Layout = ({ children, title = 'This is the default title',logado, admin }: Props) => {
+
+  var menuAdmin = false
+  if (admin == "Sim") {
+    menuAdmin = true
+  } else {
+    menuAdmin = false
+  }
 
   function signout() {
     logado = false
     destroyCookie(null, 'nextauth.token')
     destroyCookie(null, 'email.token')
+
   }
   
   return (
@@ -52,30 +62,14 @@ const Layout = ({ children, title = 'This is the default title',logado }: Props)
 
             {
               // logado || logado &&
-              logado &&
-              
-              // <Menu label="Conta" 
-              // items={[
-              // { label: 'Cadastrar Produto',
-              // onClick: () => {
-              //       <Link href="/Cadastro_de_Produtos">
-              //         <a>
-              //           <span>Produto</span>
-              //         </a>
-              //       </Link>
-              //       //nao ta pegando verificar
-              // }
-            
-            
-              // }
-            
-              // ]} />
+              (logado && menuAdmin) && 
+
               <DropButton
                 label="Logado !"
                 dropAlign={{ top: 'bottom', right: 'right' }}
                 dropContent={
                   <div className={styles.menuDropdown}>
-                   <Link href="/">
+                   <Link href="/Login">
                     <a><span onClick ={ () => signout()}>Sair</span></a>
                     </Link>
 
@@ -91,11 +85,19 @@ const Layout = ({ children, title = 'This is the default title',logado }: Props)
                       </a>
                     </Link>
 
-                    {/* <Link href="/Alterar_Dados"> */}
-                      {/* <a>
-                        <span>Alterar Dados</span>
-                      </a> */}
-                    {/* </Link> */}
+                    <Link href="/Alterar_Usuario">
+                      <a>
+                        <span>Alterar Usuarios</span>
+                      </a>
+                    </Link>
+
+                    
+                    <Link href="/Cadastro_de_Usuarios">
+                      <a>
+                        <span >Cadastre-se</span>
+                      </a>
+                    </Link>
+
 
                     <Link href="/Alterar_Produto">
                       <a>
@@ -106,6 +108,34 @@ const Layout = ({ children, title = 'This is the default title',logado }: Props)
                 }
               />
             }
+
+            { (logado && !menuAdmin) &&
+
+              <DropButton
+              label="Logado !"
+              dropAlign={{ top: 'bottom', right: 'right' }}
+              dropContent={
+                <div className={styles.menuDropdown}>
+
+                  <Link href="/Login">
+                  <a><span onClick ={ () => signout()}>Sair</span></a>
+                  </Link>
+
+                  <Link href="/Visualiza_Reserva">
+                    <a>
+                      <span>Visualizar Reservas</span>
+                    </a>
+                  </Link>
+
+                </div>
+              }
+              />
+
+
+
+            }
+
+
 
             {
               // !logado &&
@@ -121,11 +151,6 @@ const Layout = ({ children, title = 'This is the default title',logado }: Props)
                       </a>
                     </Link>
 
-                    <Link href="/Cadastro_de_Usuarios">
-                      <a>
-                        <span >Cadastre-se</span>
-                      </a>
-                    </Link>
 
                   </div>
                 }
@@ -177,7 +202,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     console.log(logado)
   }
 
-
+  console.log('teste layout')
   // await apiClient.get('/users')
 
   return {

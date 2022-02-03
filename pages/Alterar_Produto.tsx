@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Layout from '../components/Layout'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Button, Box, } from 'grommet'
 import { FileInput } from 'grommet'
 import { TextInput } from 'grommet'
@@ -16,8 +16,9 @@ import  nookies  from 'nookies';
 import DataTable from '../components/ListaProdutos'
 
 import styles from '../styles/Cadastro_de_Produtos.module.css'
+import { User } from '../interfaces';
 
-const Alterar_Produto = ({logadoB}) => {
+const Alterar_Produto = ({logadoB,emailLogado}) => {
 
     //Inputs dos campos
     const [email, setEmail] = useState('');
@@ -25,31 +26,40 @@ const Alterar_Produto = ({logadoB}) => {
 
     //Toast
     const [visible, setVisible] = useState(false);
+    const [usuario, setUsuario] = useState(null)
 
-    async function handleSubmit(event) {
+    //user
+    const getmakeUser = useCallback(async () => {
+    const data2 = await getUser(emailLogado);
+    setUsuario(data2);
+    // console.log(data2);
+    return data2
+    }, [setUsuario])
 
-        event.preventDefault()
+    useEffect(() => {
+    getmakeUser();
+    
+    }, [getmakeUser])
+    
+    async function getUser(email):Promise<User>  {
+
+    try{
+        // const response = await axios.post('http://localhost:3333/singleUser',{
+        const response = await axios.post('https://apitabacaria-2gqbsph2wq-ue.a.run.app/singleUser',{
+                "email": email,
+            })
         
-        // try{
-        // console.log(email, senha)
-        // const response = await axios.post('https://apitabacaria-2gqbsph2wq-ue.a.run.app/users',{
-        //     email: email,
-        //     password: senha
-        // })
         // console.log(response.data)
-        // setVisible(true)
-        // setTimeout(() => {setVisible(false)}, 5000);
-        // setEmail('')
-        // setSenha('')
-        // }   catch(err){
-        // console.log(err)
-
-        // }
+        return response.data
+    } catch(err) {
+        console.log(err)
+        
+    }
+    
     }
 
-
     return (
-          <Layout title="Alterar Produto" logado={logadoB}>
+          <Layout title="Alterar Produto" logado={logadoB} admin={usuario?.admin}>
         <>
 
             {visible &&
@@ -112,19 +122,21 @@ export default Alterar_Produto
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
-    const { ['nextauth.token']: token } = parseCookies(ctx)
-    var logadoB = false
-  
-    if (!token) {
-      console.log('token de login nao gerado')
-      logadoB = false
-    } else {
-      console.log("token de login gerado")
-      logadoB = true
-    }
-    
-    return {
-      props: { logadoB }
-    }
+  const { ['nextauth.token']: token } = parseCookies(ctx)
+  const  cookie_email = nookies.get(ctx)
+  var logadoB = false
+  var emailLogado = ""
+
+  if (!token) {
+    console.log('token de login nao gerado')
+    logadoB = false
+  } else {
+    console.log("token de login gerado")
+    logadoB = true
+    emailLogado = cookie_email['email.token']
   }
   
+  return {
+    props: { logadoB, emailLogado }
+  }
+}

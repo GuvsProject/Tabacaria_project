@@ -6,16 +6,51 @@ import axios from 'axios'
 
 import Link from 'next/link'
 import Layout from '../components/Layout'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import DataTableR from '../components/ListaReservas';
+import { User } from '../interfaces';
 
 const Visualiza_Reserva = ({logadoB, emailLogado}) => {
 
     //Toast
     // const [visible, setVisible] = useState(false);
+    const [usuario, setUsuario] = useState(null)
 
+     //user
+  const getmakeUser = useCallback(async () => {
+    const data2 = await getUser(emailLogado);
+    setUsuario(data2);
+    // console.log(data2);
+    return data2
+  }, [setUsuario])
+
+  useEffect(() => {
+    getmakeUser();
+    
+  }, [getmakeUser])
+ 
+  //console.log(logadoB)
+  // console.log(usuario['email'])
+  //pega usuario conforme email retornado
+  
+  async function getUser(email):Promise<User>  {
+
+    try{
+      // const response = await axios.post('http://localhost:3333/singleUser',{
+      const response = await axios.post('https://apitabacaria-2gqbsph2wq-ue.a.run.app/singleUser',{
+              "email": email,
+          })
+        
+        // console.log(response.data)
+        return response.data
+    } catch(err) {
+      console.log(err)
+      
+    }
+  
+  }
     return (
-          <Layout title="Solicitações de Reservas" logado={logadoB}>
+          <Layout title="Solicitações de Reservas" logado={logadoB} admin={usuario?.admin}>
         <>
 
             {/* {visible &&
@@ -36,7 +71,7 @@ const Visualiza_Reserva = ({logadoB, emailLogado}) => {
                    Produto Alterado com sucesso !!
                 </Alert>
             } */}
-            
+            <label>Visualização de Reservas</label>
             {<DataTableR
                 logadoB={logadoB}
                 emailLogado={emailLogado}

@@ -11,6 +11,8 @@ export type User = {
   email: string
   cpf: number
   birtDate: string
+  admin: string
+  ativo: string
   createdAt: string
   updatedAt: string
 }

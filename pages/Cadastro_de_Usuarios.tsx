@@ -1,10 +1,11 @@
 import Link from 'next/link'
 import Layout from '../components/Layout'
-import { useState,useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Button, Box, } from 'grommet'
 import { FileInput } from 'grommet'
 import { TextInput } from 'grommet'
 import { DateInput } from 'grommet'
+import { Select } from 'grommet'
 import Alert from '@material-ui/lab/Alert';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,11 +16,15 @@ import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
+import { GetServerSideProps } from 'next';
+import { parseCookies } from 'nookies';
+import  nookies  from 'nookies';
 
 import { cpfMask } from '../utils/mascara'
 import styles from '../styles/Cadastro_de_Produtos.module.css'
+import { User } from '../interfaces';
 
-const Cadastro_de_Usuarios = () => {
+const Cadastro_de_Usuarios = ({logadoB,emailLogado}) => {
 
     //Inputs dos campos
     const [nome, setNome] = useState('');
@@ -28,6 +33,8 @@ const Cadastro_de_Usuarios = () => {
     const [senha, setSenha] = useState('');
     const [senha_confirmar, setSenha_confirmar] = useState('');
     const [data, setData] = useState('');
+    const [admin_, setAdmin] = useState("Nao");
+    const [usuario_ativado, setUsuarioativado] = useState("Nao");
     
     //Toast
     const [visible, setVisible] = useState(false);
@@ -35,13 +42,41 @@ const Cadastro_de_Usuarios = () => {
     
     //Redirecionamento
     const [direciona, setDireciona] = useState(false)
+    const [usuario, setUsuario] = useState(null)
 
-    useEffect(() => { 
+    //user
+    const getmakeUser = useCallback(async () => {
+    const data2 = await getUser(emailLogado);
+    setUsuario(data2);
+    // console.log(data2);
+    return data2
+    }, [setUsuario])
+    
+    async function getUser(email):Promise<User>  {
+
+    try{
+        // const response = await axios.post('http://localhost:3333/singleUser',{
+        const response = await axios.post('https://apitabacaria-2gqbsph2wq-ue.a.run.app/singleUser',{
+                "email": email,
+            })
+        
+        // console.log(response.data)
+        return response.data
+    } catch(err) {
+        console.log(err)
+        
+    }
+    
+    }
+
+
+    useEffect(() => {
+        getmakeUser()
         if(direciona ){
           Router.push('/Login')
         }  
       }
-      , [direciona]);
+      , [direciona, getmakeUser]);
     //   return (
     //     null
     //   )
@@ -93,11 +128,14 @@ const Cadastro_de_Usuarios = () => {
                 console.log(name, senha, email, cpf)
     
                 const response = await axios.post('https://apitabacaria-2gqbsph2wq-ue.a.run.app/users',{
+                // const response = await axios.post('http://localhost:3333/users',{
                     name: nome,
                     password: senha,
                     email: email,
                     cpf: cpf.replace(/(\.|-)/g,""),
-                    birthDate: data//'2021-10-20' //ano, mes, dia
+                    birthDate: data,//'2021-10-20' //ano, mes, dia
+                    admin: admin_,
+                    ativo: usuario_ativado
                 })
                 console.log(response.data)
                 
@@ -137,7 +175,7 @@ const Cadastro_de_Usuarios = () => {
 
 
     return (
-          <Layout title="Cadastro">
+          <Layout title="Cadastro" logado={logadoB} admin={usuario?.admin}>
         <>
             {visible &&
                 <Alert variant="filled" severity="success"
@@ -217,6 +255,21 @@ const Cadastro_de_Usuarios = () => {
                         />
                         </LocalizationProvider>
 
+                        <label> Usuario é administrador ?</label>
+                        <Select
+                            options={['Sim', 'Nao']}
+                            value={admin_}
+                            defaultValue="Nao"
+                            onChange={({ option }) => setAdmin(option)}
+                            />
+
+                        <label> Usuario está ativo ?</label>
+                        <Select
+                            options={['Sim', 'Nao']}
+                            value={usuario_ativado}
+                            onChange={({ option }) => setUsuarioativado(option)}
+                        />
+
 
 
 
@@ -251,3 +304,24 @@ const Cadastro_de_Usuarios = () => {
 }
 
 export default Cadastro_de_Usuarios
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+
+    const { ['nextauth.token']: token } = parseCookies(ctx)
+    const  cookie_email = nookies.get(ctx)
+    var logadoB = false
+    var emailLogado = ""
+  
+    if (!token) {
+      console.log('token de login nao gerado')
+      logadoB = false
+    } else {
+      console.log("token de login gerado")
+      logadoB = true
+      emailLogado = cookie_email['email.token']
+    }
+    
+    return {
+      props: { logadoB, emailLogado }
+    }
+  }
