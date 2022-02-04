@@ -66,8 +66,8 @@ export default function OutlinedCard<Product>({id, name, price, quantity, descri
       var status_produto = "Inativo"
     }
     try{
-      // const response = await axios.patch('https://apitabacaria-2gqbsph2wq-ue.a.run.app/products',{
-      const response = await axios.patch('http://localhost:3333/products',{
+      const response = await axios.patch('https://apitabacaria-2gqbsph2wq-ue.a.run.app/products',{
+      // const response = await axios.patch('http://localhost:3333/products',{
         id: id_passado,
         quantity: quantidade_passada,
         price: price_passado,
